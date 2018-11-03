@@ -11,10 +11,15 @@ import UIKit
 class ToDoListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogrgon"]
-    
+    let defaults = UserDefaults.standard     //user default file - location can see from AppDelegate.swift
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+            
+            
+        itemArray = items
+    }
     }
 //start count how many items in itemArray, and output this number from this function
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -94,6 +99,10 @@ class ToDoListViewController: UITableViewController {
          
                 self.itemArray.append(textField.text!) //add new item to itemArray
           
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")     //all items from itemarray put into defaults file
+            
+            print(self.defaults.array(forKey: "ToDoListArray")!)
+            
             self.tableView.reloadData() //reload table with new item
             
             
